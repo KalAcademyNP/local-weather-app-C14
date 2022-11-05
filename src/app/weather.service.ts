@@ -24,7 +24,7 @@ export class WeatherService {
       uriParams = `${uriParams},${country}`
     }
 
-    return this.httpClient.get<ICurrentWeatherData>(`https://api.openweathermap.org/data/2.5/weather?${uriParms}&appId=${environment.appId}`).pipe(map(data => this.transformToICurrentWeather(data)))
+    return this.httpClient.get<ICurrentWeatherData>(`https://api.openweathermap.org/data/2.5/weather?${uriParams}&appId=${environment.appId}`).pipe(map(data => this.transformToICurrentWeather(data)))
   }
 
   private transformToICurrentWeather(data: ICurrentWeatherData){

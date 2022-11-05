@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms'
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {FormControl, Validators} from '@angular/forms'
 import {debounceTime} from 'rxjs/operators'
 
 @Component({
@@ -9,14 +9,17 @@ import {debounceTime} from 'rxjs/operators'
 })
 export class CitySearchComponent implements OnInit {
 
-  search = new FormControl()
+  @Output() searchEvent = new EventEmitter<string>()
+  search = new FormControl('', [Validators.minLength(3)])
   constructor() { }
 
   ngOnInit(): void {
     this.search.valueChanges
     .pipe(debounceTime(1000))
     .subscribe(data => {
-      console.log(data)
+      if (!this.search.invalid){
+        this.searchEvent.emit(data)
+      }
     })
   }
 
